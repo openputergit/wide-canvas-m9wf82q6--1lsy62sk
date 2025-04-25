@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealEstate CRM</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Sidebar -->
+    <div class="fixed inset-y-0 left-0 w-64 bg-blue-800 text-white transition-transform duration-300 transform -translate-x-full md:translate-x-0" id="sidebar">
+        <div class="p-6">
+            <h1 class="text-2xl font-bold">RealEstate CRM</h1>
+        </div>
+        <nav class="mt-6">
+            <a href="#" class="flex items-center px-6 py-3 text-gray-100 hover:bg-blue-700" onclick="showDashboard()">
+                <i class="bi bi-house-door mr-3"></i>Dashboard
+            </a>
+            <a href="#" class="flex items-center px-6 py-3 text-gray-100 hover:bg-blue-700" onclick="showLeads()">
+                <i class="bi bi-people mr-3"></i>Leads
+            </a>
+            <a href="#" class="flex items-center px-6 py-3 text-gray-100 hover:bg-blue-700" onclick="showProperties()">
+                <i class="bi bi-building mr-3"></i>Properties
+            </a>
+            <a href="#" class="flex items-center px-6 py-3 text-gray-100 hover:bg-blue-700" onclick="showCustomers()">
+                <i class="bi bi-person-badge mr-3"></i>Customers
+            </a>
+            <a href="#" class="flex items-center px-6 py-3 text-gray-100 hover:bg-blue-700" onclick="showTasks()">
+                <i class="bi bi-calendar-check mr-3"></i>Tasks
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="md:ml-64 p-8">
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden fixed top-4 left-4 z-50 bg-blue-800 text-white p-2 rounded" onclick="toggleSidebar()">
+            <i class="bi bi-list text-2xl"></i>
+        </button>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2">Total Properties</h3>
+                    <p class="text-3xl font-bold text-blue-600">156</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2">Active Leads</h3>
+                    <p class="text-3xl font-bold text-green-600">48</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2">Sales This Month</h3>
+                    <p class="text-3xl font-bold text-purple-600">12</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2">Revenue</h3>
+                    <p class="text-3xl font-bold text-orange-600">$245K</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4">Lead Trends</h3>
+                    <canvas id="leadChart"></canvas>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4">Recent Activities</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                            <p>New lead assigned to John Doe</p>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                            <p>Property viewing scheduled for tomorrow</p>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
+                            <p>Deal closed: Villa Paradise</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+        // Initialize Charts
+        const ctx = document.getElementById('leadChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'New Leads',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Navigation Functions
+        function showDashboard() {
+            // Implementation for dashboard view
+        }
+
+        function showLeads() {
+            // Implementation for leads view
+        }
+
+        function showProperties() {
+            // Implementation for properties view
+        }
+
+        function showCustomers() {
+            // Implementation for customers view
+        }
+
+        function showTasks() {
+            // Implementation for tasks view
+        }
+
+        // MongoDB Integration
+        async function saveData(data, collection) {
+            try {
+                const response = await fetch('https://r0c8kgwocscg8gsokogwwsw4.zetaverse.one/mongodb', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer Lw3ES4xoHEVBE6pginAwzbObW3q2',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        appSlug: 'realestate-crm-123',
+                        action: 'create',
+                        collection: collection,
+                        data: data
+                    })
+                });
+                return await response.json();
+            } catch (error) {
+                console.error('Error saving data:', error);
+            }
+        }
+
+        // Initialize Application
+        document.addEventListener('DOMContentLoaded', () => {
+            showDashboard();
+        });
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
